@@ -32,7 +32,7 @@ export const aboutTabs: TabContent[] = [
       { name: "Digital Ocean", category: "Deployment" },
       { name: "AWS", category: "Deployment" },
       { name: "Firebase", category: "Backend-as-a-Service" },
-      { name: "Superbase", category: "Backend-as-a-Service" },
+      { name: "Supabase", category: "Backend-as-a-Service" },
     ],
   },
   {

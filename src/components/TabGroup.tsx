@@ -10,10 +10,21 @@ export interface Tab {
 
 interface TabGroupProps {
   tabs: Tab[];
+  activeTab?: string;
+  onTabChange?: (tabId: string) => void;
 }
 
-export function TabGroup({ tabs }: TabGroupProps) {
-  const [activeTab, setActiveTab] = useState(tabs[0].id);
+export function TabGroup({ tabs, activeTab: controlledTab, onTabChange }: TabGroupProps) {
+  const [internalTab, setInternalTab] = useState(tabs[0].id);
+  const activeTab = controlledTab ?? internalTab;
+
+  function handleTabClick(tabId: string) {
+    if (onTabChange) {
+      onTabChange(tabId);
+    } else {
+      setInternalTab(tabId);
+    }
+  }
 
   return (
     <div>
@@ -22,7 +33,7 @@ export function TabGroup({ tabs }: TabGroupProps) {
         {tabs.map((tab) => (
           <button
             key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
+            onClick={() => handleTabClick(tab.id)}
             className={`border-2 border-white rounded-full px-6 py-2 text-lg ${
               activeTab === tab.id ? "bg-white text-black" : ""
             }`}

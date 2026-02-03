@@ -17,11 +17,33 @@ export function ContactForm() {
 
     // Simulate submission
     setTimeout(() => {
-      setStatus("sent");
-      setName("");
-      setEmail("");
-      setMessage("");
+      try {
+        // Simulate random failure (~10% chance)
+        if (Math.random() < 0.1) {
+          throw new Error("Simulated send failure");
+        }
+        setStatus("sent");
+        setName("");
+        setEmail("");
+        setMessage("");
+      } catch {
+        setStatus("error");
+      }
     }, 1000);
+  }
+
+  if (status === "error") {
+    return (
+      <div className="border-2 border-white rounded-2xl p-6 md:p-8 text-center">
+        <p className="text-2xl">Something went wrong</p>
+        <p className="text-lg text-gray-400 mt-2">
+          Please try again later.
+        </p>
+        <div className="mt-6">
+          <Button onClick={() => setStatus("idle")}>Try again</Button>
+        </div>
+      </div>
+    );
   }
 
   if (status === "sent") {
