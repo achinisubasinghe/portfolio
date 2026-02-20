@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function AchievementsPage() {
   return (
-    <div className="my-20">
+    <div>
       <h1 className="text-3xl md:text-4xl mb-10">Achievements</h1>
       <Section className="mb-10">
         <p className="text-lg leading-relaxed">{achievementsIntro}</p>
