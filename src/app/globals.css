@@ -11,7 +11,7 @@
   --color-accent: #c4a882;
   --color-accent-soft: rgba(196, 168, 130, 0.14);
   --color-accent-muted: #a89070;
-  --font-sans: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-caveat), cursive;
   --font-handwritten: var(--font-caveat), cursive;
   --radius-sm: 0.5rem;
   --radius-md: 0.75rem;
@@ -24,17 +24,29 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
 
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
-    font-family: var(--font-sans);
+    font-family: var(--font-handwritten);
     font-weight: 400;
-    line-height: 1.65;
+    /* Scales fluidly from phones → large desktops */
+    font-size: clamp(1rem, 0.92rem + 0.35vw, 1.125rem);
+    line-height: 1.7;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  img,
+  video,
+  canvas,
+  svg {
+    max-width: 100%;
+    height: auto;
   }
 
   ::selection {
@@ -52,13 +64,15 @@
   h3,
   h4 {
     text-wrap: balance;
-    letter-spacing: -0.02em;
-    line-height: 1.15;
-    font-weight: 500;
+    letter-spacing: 0.01em;
+    line-height: 1.2;
+    font-weight: 600;
+    overflow-wrap: break-word;
   }
 
   p {
     text-wrap: pretty;
+    overflow-wrap: break-word;
   }
 
   a {
@@ -69,6 +83,19 @@
       opacity 200ms ease,
       transform 200ms ease;
   }
+
+  /* Prevent iOS zoom on form focus while keeping readable size */
+  input,
+  textarea,
+  select {
+    font-size: max(1rem, 16px);
+  }
+}
+
+/* Lock body scroll when mobile nav is open */
+body.nav-open {
+  overflow: hidden;
+  touch-action: none;
 }
 
 /* Skip link — visible on keyboard focus */

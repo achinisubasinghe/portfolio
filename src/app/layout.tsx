@@ -1,16 +1,9 @@
-import type { Metadata } from "next";
-import { Caveat, Outfit } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Caveat } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { StarBackground } from "@/components/StarBackground";
-
-const outfit = Outfit({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-outfit",
-  display: "swap",
-});
 
 const caveat = Caveat({
   subsets: ["latin"],
@@ -18,6 +11,12 @@ const caveat = Caveat({
   variable: "--font-caveat",
   display: "swap",
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#0c0e12",
+};
 
 export const metadata: Metadata = {
   title: "Achini Subasinghe | Portfolio",
@@ -37,8 +36,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${outfit.variable} ${caveat.variable}`}>
-      <body className="font-sans min-h-dvh">
+    <html lang="en" className={caveat.variable}>
+      <body className="font-handwritten min-h-dvh">
         <a href="#main-content" className="skip-link">
           Skip to content
         </a>
@@ -49,7 +48,7 @@ export default function RootLayout({
           <Navbar />
           <main
             id="main-content"
-            className="mx-auto w-full max-w-6xl flex-1 px-4 py-10 md:px-6 md:py-14"
+            className="mx-auto w-full max-w-6xl flex-1 px-3 py-8 sm:px-4 sm:py-10 md:px-6 md:py-14"
           >
             {children}
           </main>
