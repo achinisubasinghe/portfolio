@@ -26,20 +26,24 @@ export default function VolunteeringPage() {
 
               {/* Right — two images */}
               <div className="w-full md:w-1/2 grid grid-cols-2 gap-4">
-                <Image
-                  src={exp.image1}
-                  alt={`${exp.title} image 1`}
-                  width={250}
-                  height={250}
-                  className="rounded-2xl border-2 border-white w-full h-auto"
-                />
-                <Image
-                  src={exp.image2}
-                  alt={`${exp.title} image 2`}
-                  width={250}
-                  height={250}
-                  className="rounded-2xl border-2 border-white w-full h-auto"
-                />
+                <div className="aspect-square w-full">
+                  <Image
+                    src={exp.image1}
+                    alt={`${exp.title} image 1`}
+                    width={250}
+                    height={250}
+                    className="rounded-2xl border-2 border-white object-cover w-full h-full"
+                  />
+                </div>
+                <div className="aspect-square w-full">
+                  <Image
+                    src={exp.image2}
+                    alt={`${exp.title} image 2`}
+                    width={250}
+                    height={250}
+                    className="rounded-2xl border-2 border-white object-cover w-full h-full"
+                  />
+                </div>
               </div>
             </div>
           </Section>
