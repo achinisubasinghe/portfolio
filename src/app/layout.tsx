@@ -27,7 +27,7 @@ export default function RootLayout({
         <StarBackground />
         <div className="relative z-10">
           <Navbar />
-          <main className="max-w-6xl mx-auto px-4">{children}</main>
+          <main className="max-w-6xl mx-auto px-4 py-8 md:py-12">{children}</main>
           <Footer />
         </div>
       </body>

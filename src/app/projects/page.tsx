@@ -55,7 +55,7 @@ function ProjectCard({ title, description, repoUrl, techStack }: ProjectCardProp
 
 export default function ProjectsPage() {
   return (
-    <div className="my-20">
+    <div>
       <h1 className="text-3xl md:text-4xl mb-10">Projects</h1>
       <div className="flex flex-col gap-10">
         {projects.map((project) => (

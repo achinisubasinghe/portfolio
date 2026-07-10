@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <div className="my-20">
+    <div>
       <h1 className="text-3xl md:text-4xl mb-10">Contact</h1>
 
       <div className="flex flex-col md:flex-row gap-10">

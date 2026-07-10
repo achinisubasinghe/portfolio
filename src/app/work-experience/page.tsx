@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function WorkExperiencePage() {
   return (
-    <div className="my-20 flex flex-col gap-20">
+    <div className="flex flex-col gap-20">
       {/* Work Experience section */}
       <div>
         <h1 className="text-3xl md:text-4xl mb-10">Work Experience</h1>

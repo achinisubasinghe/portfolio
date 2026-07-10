@@ -24,7 +24,7 @@ export const volunteeringExperiences: VolunteeringExperience[] = [
     description:
       "Provided free tutoring in programming and mathematics to underprivileged high school students. Designed lesson plans, conducted weekly online sessions, and mentored students through their exam preparation.",
     image1: "/images/ieeeMe.jpeg",
-    image2: "/images/ieee.jpeg",
+    image2: "/images/ieeeDay.jpeg",
   },
   {
     title: "Plymhack ",

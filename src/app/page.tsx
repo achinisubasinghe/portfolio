@@ -5,7 +5,7 @@ import { Section } from "@/components/Section";
 
 export default function Home() {
   return (
-    <div className="flex flex-col md:flex-row items-center gap-10 my-20">
+    <div className="flex flex-col md:flex-row items-center gap-10">
       {/* Left column — portrait image */}
       <div className="w-full md:w-2/5 flex justify-center">
         <Image
