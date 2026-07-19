@@ -29,7 +29,7 @@ export function TabGroup({ tabs, activeTab: controlledTab, onTabChange }: TabGro
   return (
     <div>
       <div
-        className="mb-8 flex flex-wrap gap-2"
+        className="-mx-1 mb-6 flex gap-2 overflow-x-auto px-1 pb-1 sm:mb-8 sm:flex-wrap sm:overflow-visible"
         role="tablist"
         aria-label="About sections"
       >
@@ -43,7 +43,8 @@ export function TabGroup({ tabs, activeTab: controlledTab, onTabChange }: TabGro
               aria-selected={isActive}
               onClick={() => handleTabClick(tab.id)}
               className={[
-                "interactive-surface rounded-full px-5 py-2 text-sm font-medium tracking-wide",
+                "interactive-surface shrink-0 rounded-full px-4 py-2 text-sm font-medium tracking-wide sm:px-5",
+                "min-h-10",
                 isActive
                   ? "border border-accent/40 bg-accent text-background shadow-[0_0_20px_rgba(196,168,130,0.18)]"
                   : "border border-border-strong bg-transparent text-muted hover:border-accent/40 hover:bg-accent-soft hover:text-accent",

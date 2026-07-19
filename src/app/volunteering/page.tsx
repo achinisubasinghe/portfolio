@@ -11,25 +11,27 @@ export const metadata: Metadata = {
 export default function VolunteeringPage() {
   return (
     <div>
-      <header className="mb-10 space-y-3">
+      <header className="mb-8 space-y-2 sm:mb-10 sm:space-y-3">
         <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">
           Community
         </p>
-        <h1 className="text-3xl font-medium tracking-tight md:text-4xl">
+        <h1 className="text-2xl font-medium tracking-tight sm:text-3xl md:text-4xl">
           Volunteering
         </h1>
       </header>
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-6 sm:gap-8">
         {volunteeringExperiences.map((exp, index) => (
           <Section key={exp.title}>
             <div
               className={[
-                "flex flex-col gap-8",
-                index % 2 === 1 ? "md:flex-row-reverse" : "md:flex-row",
+                "flex flex-col gap-6 sm:gap-8",
+                index % 2 === 1 ? "lg:flex-row-reverse" : "lg:flex-row",
               ].join(" ")}
             >
-              <div className="flex w-full flex-col gap-3 md:w-1/2">
-                <h2 className="text-2xl font-medium tracking-tight">{exp.title.trim()}</h2>
+              <div className="flex w-full min-w-0 flex-col gap-3 lg:w-1/2">
+                <h2 className="text-xl font-medium tracking-tight sm:text-2xl">
+                  {exp.title.trim()}
+                </h2>
                 <p className="text-base font-medium text-accent-muted">
                   {exp.organization}
                 </p>
@@ -39,7 +41,7 @@ export default function VolunteeringPage() {
                 </p>
               </div>
 
-              <div className="grid w-full grid-cols-2 gap-3 md:w-1/2">
+              <div className="grid w-full grid-cols-2 gap-2 sm:gap-3 lg:w-1/2">
                 <div className="aspect-square overflow-hidden rounded-lg border border-border">
                   <Image
                     src={exp.image1}
@@ -47,6 +49,7 @@ export default function VolunteeringPage() {
                     width={400}
                     height={400}
                     className="h-full w-full object-cover"
+                    sizes="(max-width: 1024px) 50vw, 25vw"
                   />
                 </div>
                 <div className="aspect-square overflow-hidden rounded-lg border border-border">
@@ -56,6 +59,7 @@ export default function VolunteeringPage() {
                     width={400}
                     height={400}
                     className="h-full w-full object-cover"
+                    sizes="(max-width: 1024px) 50vw, 25vw"
                   />
                 </div>
               </div>
