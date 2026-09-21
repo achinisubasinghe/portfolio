@@ -18,8 +18,8 @@ export default function WorkExperiencePage() {
             <Section key={entry.title}>
               <div className="flex flex-col gap-3">
                 <h2 className="text-2xl">{entry.title}</h2>
-                <p className="text-xl text-gray-400">{entry.company}</p>
-                <p className="text-base text-gray-400">{entry.period}</p>
+                <p className="text-xl text-muted">{entry.company}</p>
+                <p className="text-base text-muted">{entry.period}</p>
                 <p className="text-lg leading-relaxed mt-2">{entry.description}</p>
               </div>
             </Section>

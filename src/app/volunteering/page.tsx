@@ -19,8 +19,8 @@ export default function VolunteeringPage() {
               {/* Left — details */}
               <div className="w-full md:w-1/2 flex flex-col gap-3">
                 <h2 className="text-2xl">{exp.title}</h2>
-                <p className="text-xl text-gray-400">{exp.organization}</p>
-                <p className="text-base text-gray-400">{exp.period}</p>
+                <p className="text-xl text-muted">{exp.organization}</p>
+                <p className="text-base text-muted">{exp.period}</p>
                 <p className="text-lg leading-relaxed mt-2">{exp.description}</p>
               </div>
 
@@ -32,7 +32,7 @@ export default function VolunteeringPage() {
                     alt={`${exp.title} image 1`}
                     width={250}
                     height={250}
-                    className="rounded-2xl border-2 border-white object-cover w-full h-full"
+                    className="h-full w-full rounded-2xl border border-white/20 object-cover"
                   />
                 </div>
                 <div className="aspect-square w-full">
@@ -41,7 +41,7 @@ export default function VolunteeringPage() {
                     alt={`${exp.title} image 2`}
                     width={250}
                     height={250}
-                    className="rounded-2xl border-2 border-white object-cover w-full h-full"
+                    className="h-full w-full rounded-2xl border border-white/20 object-cover"
                   />
                 </div>
               </div>

@@ -26,7 +26,7 @@ function groupByCategory(items: { name: string; category?: string }[]) {
 
 function ToolPill({ name }: { name: string }) {
   return (
-    <span className="border-2 border-white rounded-full px-3 py-1 text-sm whitespace-nowrap">
+    <span className="whitespace-nowrap rounded-full border border-white/25 bg-white/8 px-3 py-1 text-sm">
       {name}
     </span>
   );
@@ -40,9 +40,9 @@ function renderToolsContent(content: { name: string; category?: string }[]) {
       {Object.entries(grouped).map(([category, names]) => (
         <div
           key={category}
-          className="border border-white/40 rounded-xl p-4 flex flex-col gap-3"
+          className="flex flex-col gap-3 rounded-xl border border-white/20 bg-white/5 p-4"
         >
-          <h3 className="text-base text-gray-400 border-b border-white/20 pb-2">
+          <h3 className="border-b border-white/15 pb-2 text-base text-muted">
             {category}
           </h3>
           <div className="flex flex-wrap gap-2">
@@ -82,7 +82,7 @@ function renderTabContent(
     <div className="space-y-6">
       {Object.entries(grouped).map(([category, names]) => (
         <div key={category}>
-          <h3 className="text-xl text-gray-400 mb-3">{category}</h3>
+          <h3 className="mb-3 text-xl text-muted">{category}</h3>
           <div className="flex flex-wrap gap-2">
             {names.map((name) => (
               <ToolPill key={name} name={name} />
@@ -116,7 +116,7 @@ export function AboutContent() {
           alt="About section image"
           width={image.width}
           height={image.height}
-          className="rounded-2xl border-2 border-white w-full h-auto object-contain"
+          className="h-auto w-full rounded-3xl border border-white/20 object-contain shadow-[0_16px_40px_rgba(0,0,0,0.35)]"
         />
       </div>
     </div>

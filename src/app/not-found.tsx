@@ -11,10 +11,10 @@ export default function NotFound() {
     <div className="text-center">
       <Section>
         <h1 className="text-4xl md:text-5xl mb-4">404</h1>
-        <p className="text-2xl text-gray-400 mb-6">Page not found</p>
+        <p className="mb-6 text-2xl text-muted">Page not found</p>
         <Link
           href="/"
-          className="border-2 border-white rounded-full px-6 py-2 text-lg inline-block"
+          className="inline-block rounded-full border border-white/25 bg-white/8 px-6 py-2 text-lg transition-colors hover:bg-white/14 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
         >
           Go back home
         </Link>

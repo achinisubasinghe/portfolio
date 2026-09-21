@@ -39,9 +39,9 @@ export function ContactForm() {
 
   if (status === "error") {
     return (
-      <div className="border-2 border-white rounded-2xl p-6 md:p-8 text-center">
+      <div className="glass rounded-3xl p-6 text-center md:p-8">
         <p className="text-2xl">Something went wrong</p>
-        <p className="text-lg text-gray-400 mt-2">
+        <p className="mt-2 text-lg text-muted">
           Please try again later.
         </p>
         <div className="mt-6">
@@ -53,9 +53,9 @@ export function ContactForm() {
 
   if (status === "sent") {
     return (
-      <div className="border-2 border-white rounded-2xl p-6 md:p-8 text-center">
-        <p className="text-2xl">Message sent!</p>
-        <p className="text-lg text-gray-400 mt-2">Thank you for reaching out. I&apos;ll get back to you soon.</p>
+      <div className="glass rounded-3xl p-6 text-center md:p-8">
+        <p className="text-2xl">Message sent</p>
+        <p className="mt-2 text-lg text-muted">Thank you for reaching out. I&apos;ll get back to you soon.</p>
         <div className="mt-6">
           <Button onClick={() => setStatus("idle")}>Send another message</Button>
         </div>
@@ -64,7 +64,7 @@ export function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="border-2 border-white rounded-2xl p-6 md:p-8">
+    <form onSubmit={handleSubmit} className="glass rounded-3xl p-6 md:p-8">
       <h2 className="text-2xl md:text-3xl mb-6">Send me a message</h2>
 
       <div className="flex flex-col gap-5">
@@ -76,7 +76,7 @@ export function ContactForm() {
             required
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="border-2 border-white rounded-full px-4 py-2 bg-transparent text-lg text-white placeholder-gray-500 focus:outline-none"
+            className="rounded-full border border-white/25 bg-white/5 px-4 py-2 text-lg text-ice placeholder:text-muted/70 focus:outline-none focus:ring-2 focus:ring-accent/60"
             placeholder="Your name"
           />
         </div>
@@ -89,7 +89,7 @@ export function ContactForm() {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="border-2 border-white rounded-full px-4 py-2 bg-transparent text-lg text-white placeholder-gray-500 focus:outline-none"
+            className="rounded-full border border-white/25 bg-white/5 px-4 py-2 text-lg text-ice placeholder:text-muted/70 focus:outline-none focus:ring-2 focus:ring-accent/60"
             placeholder="your@email.com"
           />
         </div>
@@ -102,7 +102,7 @@ export function ContactForm() {
             rows={5}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            className="border-2 border-white rounded-2xl px-4 py-2 bg-transparent text-lg text-white placeholder-gray-500 focus:outline-none resize-none"
+            className="resize-none rounded-2xl border border-white/25 bg-white/5 px-4 py-2 text-lg text-ice placeholder:text-muted/70 focus:outline-none focus:ring-2 focus:ring-accent/60"
             placeholder="Your message..."
           />
         </div>

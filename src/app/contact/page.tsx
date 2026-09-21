@@ -24,16 +24,16 @@ export default function ContactPage() {
             <h3 className="text-2xl mb-4">Contact Details</h3>
             <ul className="space-y-4 text-lg">
               <li>
-                <span className="text-gray-400">Email:</span>{" "}
+                <span className="text-muted">Email:</span>{" "}
                 <a href={`mailto:${personal.email}`} className="underline">
                   {personal.email}
                 </a>
               </li>
               <li>
-                <span className="text-gray-400">Phone:</span> {personal.phone}
+                <span className="text-muted">Phone:</span> {personal.phone}
               </li>
               <li>
-                <span className="text-gray-400">Location:</span> {personal.location}
+                <span className="text-muted">Location:</span> {personal.location}
               </li>
             </ul>
           </Section>

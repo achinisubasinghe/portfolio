@@ -4,42 +4,41 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { navLinks } from "@/data/navigation";
+import GooeyNav from "@/components/bits/GooeyNav";
 
 export function Navbar() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
 
+  const activeIndex = Math.max(
+    0,
+    navLinks.findIndex((link) =>
+      link.href === "/" ? pathname === "/" : pathname.startsWith(link.href)
+    )
+  );
+
   return (
-    <nav className="border-b-2 border-white">
-      <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-        <Link href="/" className="text-2xl">
+    <header className="sticky top-0 z-40 px-3 pt-4 md:px-6 md:pt-5">
+      <div className="glass-nav mx-auto flex max-w-[1120px] items-center gap-3 rounded-full px-2 py-1.5 md:px-3 md:py-2">
+        <Link
+          href="/"
+          className="grid size-10 shrink-0 place-items-center rounded-full border border-white/25 bg-white/10 text-sm font-semibold tracking-wide text-ice shadow-[inset_0_1px_0_rgba(255,255,255,0.35)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+          aria-label="Home"
+        >
           AS
         </Link>
 
-        {/* Desktop links */}
-        <ul className="hidden md:flex gap-8 text-lg">
-          {navLinks.map((link) => {
-            const isActive = pathname === link.href;
-            return (
-              <li key={link.href}>
-                <Link
-                  href={link.href}
-                  className={isActive ? "border-b-2 border-white" : "text-gray-400"}
-                >
-                  {link.label}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+        <div className="hidden min-w-0 flex-1 lg:flex">
+          <GooeyNav items={navLinks} activeIndex={activeIndex} />
+        </div>
 
-        {/* Mobile hamburger */}
         <button
-          className="md:hidden border-2 border-white rounded-full p-2"
+          className="ml-auto grid size-10 place-items-center rounded-full border border-white/25 bg-white/10 text-ice lg:hidden"
           onClick={() => setMenuOpen(!menuOpen)}
+          aria-expanded={menuOpen}
           aria-label="Toggle navigation menu"
         >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             {menuOpen ? (
               <path d="M18 6L6 18M6 6l12 12" />
             ) : (
@@ -49,16 +48,18 @@ export function Navbar() {
         </button>
       </div>
 
-      {/* Mobile menu */}
       {menuOpen && (
-        <ul className="md:hidden px-4 pb-4 flex flex-col gap-3 text-lg">
+        <ul className="glass mx-auto mt-2 flex max-w-[1120px] flex-col gap-1 rounded-3xl p-3 lg:hidden">
           {navLinks.map((link) => {
-            const isActive = pathname === link.href;
+            const isActive =
+              link.href === "/" ? pathname === "/" : pathname.startsWith(link.href);
             return (
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className={isActive ? "border-b-2 border-white" : "text-gray-400"}
+                  className={`block rounded-full px-4 py-2.5 text-base transition-colors ${
+                    isActive ? "bg-ice text-background" : "text-ice/80 hover:bg-white/10"
+                  }`}
                   onClick={() => setMenuOpen(false)}
                 >
                   {link.label}
@@ -68,6 +69,6 @@ export function Navbar() {
           })}
         </ul>
       )}
-    </nav>
+    </header>
   );
 }

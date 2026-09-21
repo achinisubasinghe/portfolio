@@ -34,8 +34,10 @@ export function TabGroup({ tabs, activeTab: controlledTab, onTabChange }: TabGro
           <button
             key={tab.id}
             onClick={() => handleTabClick(tab.id)}
-            className={`border-2 border-white rounded-full px-6 py-2 text-lg ${
-              activeTab === tab.id ? "bg-white text-black" : ""
+            className={`rounded-full border border-white/25 px-6 py-2 text-base backdrop-blur-md transition-all duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${
+              activeTab === tab.id
+                ? "bg-ice text-background"
+                : "bg-white/8 text-ice hover:bg-white/14"
             }`}
           >
             {tab.label}
