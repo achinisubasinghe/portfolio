@@ -167,6 +167,7 @@ const GooeyNav = ({
               <Link
                 href={item.href}
                 onClick={(e) => handleClick(e, index)}
+                aria-current={activeIndex === index ? "page" : undefined}
                 className="inline-block rounded-full px-[0.85em] py-[0.55em] outline-none focus-visible:ring-2 focus-visible:ring-accent/80"
               >
                 {item.label}
