@@ -155,7 +155,7 @@ const GooeyNav = ({
       <nav className="relative flex w-full" style={{ transform: "translate3d(0,0,0.01px)" }}>
         <ul
           ref={navRef}
-          className="relative z-[3] m-0 flex w-full list-none items-center justify-evenly p-0 pl-3 pr-1 text-sm md:text-[0.95rem]"
+          className="relative z-[3] m-0 flex w-full list-none items-center justify-evenly p-0 pl-3 pr-1 text-lg"
         >
           {items.map((item, index) => (
             <li
@@ -168,7 +168,7 @@ const GooeyNav = ({
                 href={item.href}
                 onClick={(e) => handleClick(e, index)}
                 aria-current={activeIndex === index ? "page" : undefined}
-                className="inline-block rounded-full px-[0.85em] py-[0.55em] outline-none focus-visible:ring-2 focus-visible:ring-accent/80"
+                className="inline-block rounded-full px-[0.9em] py-[0.45em] outline-none focus-visible:ring-2 focus-visible:ring-accent/80"
               >
                 {item.label}
               </Link>

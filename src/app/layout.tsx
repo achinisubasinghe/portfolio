@@ -1,20 +1,14 @@
 import type { Metadata } from "next";
-import { Figtree } from "next/font/google";
-import localFont from "next/font/local";
+import { Caveat } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { LiquidBackground } from "@/components/LiquidBackground";
 
-const figtree = Figtree({
+const caveat = Caveat({
   subsets: ["latin"],
-  variable: "--font-figtree",
-  display: "swap",
-});
-
-const semestha = localFont({
-  src: "../fonts/Semestha.ttf",
-  variable: "--font-semestha",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-caveat",
   display: "swap",
 });
 
@@ -29,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${figtree.variable} ${semestha.variable}`}>
+    <html lang="en" className={caveat.variable}>
       <body className="font-sans antialiased">
         <a
           href="#content"

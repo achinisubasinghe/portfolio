@@ -22,7 +22,7 @@ export function Navbar() {
       <div className="glass-nav mx-auto flex max-w-[1120px] items-center gap-3 rounded-full px-2 py-1.5 md:px-3 md:py-2">
         <Link
           href="/"
-          className="grid size-10 shrink-0 place-items-center rounded-full border border-white/25 bg-white/10 text-sm font-semibold tracking-wide text-ice shadow-[inset_0_1px_0_rgba(255,255,255,0.35)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+          className="glass-chip grid size-10 shrink-0 place-items-center rounded-full text-xl text-ice focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
           aria-label="Home"
         >
           AS
@@ -33,7 +33,7 @@ export function Navbar() {
         </div>
 
         <button
-          className="ml-auto grid size-10 place-items-center rounded-full border border-white/25 bg-white/10 text-ice lg:hidden"
+          className="glass-chip ml-auto grid size-10 place-items-center rounded-full text-ice lg:hidden"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-expanded={menuOpen}
           aria-label="Toggle navigation menu"
@@ -57,8 +57,8 @@ export function Navbar() {
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className={`block rounded-full px-4 py-2.5 text-base transition-colors ${
-                    isActive ? "bg-ice text-background" : "text-ice/80 hover:bg-white/10"
+                  className={`block rounded-full px-4 py-2.5 text-lg ${
+                    isActive ? "glass-chip-active text-ice" : "text-ice/80 hover:bg-white/10"
                   }`}
                   onClick={() => setMenuOpen(false)}
                 >
