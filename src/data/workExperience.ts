@@ -1,16 +1,18 @@
 export interface WorkEntry {
   title: string;
   company: string;
+  type: string;
   period: string;
   description: string;
 }
 
 export const workEntries: WorkEntry[] = [
   {
-    title: "Contact support agent ",
-    company: "IWI Coperation Pvt Ltd",
-    period: "part-time | Jan 2026 – Present",
+    title: "Contact support agent",
+    company: "IWI Corporation Pvt Ltd",
+    type: "Part-time",
+    period: "Jan 2026 to present",
     description:
-      "Provided technical support to customers via phone and email. Resolved issues related to software functionality and database queries. Collaborated with development team to identify and report bugs.",
+      "Handle customer support requests by phone and email. Investigate software issues and database queries, and work with the development team to reproduce and log bugs.",
   },
 ];

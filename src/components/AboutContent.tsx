@@ -2,90 +2,87 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { aboutTabs } from "@/data/about";
+import { aboutTabs, type AboutTab, type EducationItem, type SkillItem } from "@/data/about";
 import { TabGroup, type Tab } from "@/components/TabGroup";
 import { Section } from "@/components/Section";
 
-const tabImages: Record<string, { src: string; width: number; height: number }> = {
-  education: { src: "/images/vice.jpeg", width: 1145, height: 764 },
-  tools: { src: "/images/lap.jpeg", width: 1280, height: 1145 },
-  technologies: { src: "/images/work.jpeg", width: 3024, height: 4032 },
+const tabImages: Record<
+  AboutTab["id"],
+  { src: string; width: number; height: number; alt: string }
+> = {
+  education: {
+    src: "/images/vice.jpeg",
+    width: 1145,
+    height: 764,
+    alt: "Achini Subasinghe at NSBM Green University",
+  },
+  tools: {
+    src: "/images/lap.jpeg",
+    width: 3024,
+    height: 4032,
+    alt: "Achini Subasinghe configuring a network switch on her laptop in a university lab",
+  },
+  technologies: {
+    src: "/images/work.jpeg",
+    width: 1280,
+    height: 1145,
+    alt: "Achini Subasinghe working on a laptop during a university lab session",
+  },
 };
 
-function groupByCategory(items: { name: string; category?: string }[]) {
+function groupByCategory(items: SkillItem[]) {
   return items.reduce(
     (acc, item) => {
-      const cat = item.category || "Other";
-      if (!acc[cat]) acc[cat] = [];
-      acc[cat].push(item.name);
+      if (!acc[item.category]) acc[item.category] = [];
+      acc[item.category].push(item.name);
       return acc;
     },
     {} as Record<string, string[]>
   );
 }
 
-function ToolPill({ name }: { name: string }) {
+function EducationList({ items }: { items: EducationItem[] }) {
   return (
-    <span className="whitespace-nowrap rounded-full border border-white/25 bg-white/8 px-3 py-1 text-sm">
-      {name}
-    </span>
+    <ul className="divide-y divide-white/10">
+      {items.map((item) => (
+        <li key={item.degree} className="py-5 first:pt-0 last:pb-0">
+          <div className="flex flex-wrap items-baseline justify-between gap-2">
+            <h2 className="text-base font-semibold tracking-[-0.01em] text-ice sm:text-lg">
+              {item.degree}
+            </h2>
+            <time className="font-mono text-xs tracking-[0.03em] tabular-nums text-accent">
+              {item.period}
+            </time>
+          </div>
+          <p className="mt-1 text-sm text-muted">{item.institution}</p>
+          {item.details && <p className="mt-1.5 text-sm text-ice/75">{item.details}</p>}
+        </li>
+      ))}
+    </ul>
   );
 }
 
-function renderToolsContent(content: { name: string; category?: string }[]) {
-  const grouped = groupByCategory(content);
+function SkillGrid({ items }: { items: SkillItem[] }) {
+  const grouped = groupByCategory(items);
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
       {Object.entries(grouped).map(([category, names]) => (
         <div
           key={category}
-          className="flex flex-col gap-3 rounded-xl border border-white/20 bg-white/5 p-4"
+          className="flex flex-col gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-4"
         >
-          <h3 className="border-b border-white/15 pb-2 text-base text-muted">
+          <h2 className="border-b border-white/10 pb-2 font-mono text-xs tracking-[0.04em] text-muted">
             {category}
-          </h3>
+          </h2>
           <div className="flex flex-wrap gap-2">
             {names.map((name) => (
-              <ToolPill key={name} name={name} />
-            ))}
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function renderTabContent(
-  tabId: string,
-  content: string[] | { name: string; category?: string }[]
-) {
-  const items = content;
-
-  if (typeof items[0] === "string") {
-    return (
-      <ul className="list-disc list-inside space-y-3 text-lg">
-        {(items as string[]).map((item, i) => (
-          <li key={i}>{item}</li>
-        ))}
-      </ul>
-    );
-  }
-
-  if (tabId === "tools") {
-    return renderToolsContent(items as { name: string; category?: string }[]);
-  }
-
-  const grouped = groupByCategory(items as { name: string; category?: string }[]);
-
-  return (
-    <div className="space-y-6">
-      {Object.entries(grouped).map(([category, names]) => (
-        <div key={category}>
-          <h3 className="mb-3 text-xl text-muted">{category}</h3>
-          <div className="flex flex-wrap gap-2">
-            {names.map((name) => (
-              <ToolPill key={name} name={name} />
+              <span
+                key={name}
+                className="rounded-md border border-white/12 bg-white/[0.04] px-2.5 py-1 font-mono text-xs text-ice/90"
+              >
+                {name}
+              </span>
             ))}
           </div>
         </div>
@@ -95,29 +92,56 @@ function renderTabContent(
 }
 
 export function AboutContent() {
-  const [activeTab, setActiveTab] = useState(aboutTabs[0].id);
+  const [activeTab, setActiveTab] = useState<AboutTab["id"]>(aboutTabs[0].id);
 
   const tabs: Tab[] = aboutTabs.map((tab) => ({
     id: tab.id,
     label: tab.label,
-    content: <Section>{renderTabContent(tab.id, tab.content)}</Section>,
+    content: (
+      <Section>
+        {tab.education ? (
+          <EducationList items={tab.education} />
+        ) : (
+          <SkillGrid items={tab.skills ?? []} />
+        )}
+      </Section>
+    ),
   }));
 
-  const image = tabImages[activeTab] ?? tabImages.education;
-
   return (
-    <div className="flex flex-col md:flex-row gap-10 items-start">
-      <div className="w-full md:w-3/5">
-        <TabGroup tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} />
-      </div>
-      <div className="w-full md:w-2/5 flex justify-center sticky top-8">
-        <Image
-          src={image.src}
-          alt="About section image"
-          width={image.width}
-          height={image.height}
-          className="h-auto w-full rounded-3xl border border-white/20 object-contain shadow-[0_16px_40px_rgba(0,0,0,0.35)]"
+    <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-12">
+      <div className="lg:col-span-7">
+        <TabGroup
+          tabs={tabs}
+          activeTab={activeTab}
+          onTabChange={(id) => setActiveTab(id as AboutTab["id"])}
+          ariaLabel="About sections"
         />
+      </div>
+      <div className="lg:sticky lg:top-28 lg:col-span-5">
+        <div className="glass overflow-hidden rounded-2xl p-2">
+          <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl bg-[#0b1018]">
+            {(Object.entries(tabImages) as [AboutTab["id"], (typeof tabImages)[AboutTab["id"]]][]).map(
+              ([id, item]) => {
+                const isActive = activeTab === id;
+                return (
+                  <Image
+                    key={id}
+                    src={item.src}
+                    alt={item.alt}
+                    width={item.width}
+                    height={item.height}
+                    priority={id === "education"}
+                    aria-hidden={!isActive}
+                    className={`absolute inset-0 h-full w-full object-cover object-top transition-opacity duration-200 motion-reduce:transition-none ${
+                      isActive ? "opacity-100" : "pointer-events-none opacity-0"
+                    }`}
+                  />
+                );
+              }
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

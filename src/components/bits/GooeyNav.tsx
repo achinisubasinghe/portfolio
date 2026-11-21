@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type MouseEvent } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 
 interface GooeyNavItem {
@@ -10,175 +10,91 @@ interface GooeyNavItem {
 
 export interface GooeyNavProps {
   items: GooeyNavItem[];
-  animationTime?: number;
-  particleCount?: number;
-  particleDistances?: [number, number];
-  particleR?: number;
-  timeVariance?: number;
-  colors?: number[];
   activeIndex?: number;
 }
 
-const GooeyNav = ({
-  items,
-  animationTime = 600,
-  particleCount = 12,
-  particleDistances = [28, 8],
-  particleR = 80,
-  timeVariance = 240,
-  colors = [1, 2, 3, 1, 2, 3, 1, 4],
-  activeIndex: activeIndexProp = 0,
-}: GooeyNavProps) => {
-  const containerRef = useRef<HTMLDivElement>(null);
+const GooeyNav = ({ items, activeIndex = 0 }: GooeyNavProps) => {
+  const containerRef = useRef<HTMLElement>(null);
   const navRef = useRef<HTMLUListElement>(null);
-  const filterRef = useRef<HTMLSpanElement>(null);
-  const textRef = useRef<HTMLSpanElement>(null);
-  const [activeIndex, setActiveIndex] = useState(activeIndexProp);
-  const reduceMotionRef = useRef(false);
+  const [halo, setHalo] = useState({ x: 0, ready: false });
 
   useEffect(() => {
-    reduceMotionRef.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  }, []);
-
-  useEffect(() => {
-    setActiveIndex(activeIndexProp);
-  }, [activeIndexProp]);
-
-  const noise = (n = 1) => n / 2 - Math.random() * n;
-
-  const getXY = (distance: number, pointIndex: number, totalPoints: number): [number, number] => {
-    const angle = ((360 + noise(8)) / totalPoints) * pointIndex * (Math.PI / 180);
-    return [distance * Math.cos(angle), distance * Math.sin(angle)];
-  };
-
-  const createParticle = (i: number, t: number, d: [number, number], r: number) => {
-    const rotate = noise(r / 10);
-    return {
-      start: getXY(d[0], particleCount - i, particleCount),
-      end: getXY(d[1] + noise(7), particleCount - i, particleCount),
-      time: t,
-      scale: 1 + noise(0.2),
-      color: colors[Math.floor(Math.random() * colors.length)],
-      rotate: rotate > 0 ? (rotate + r / 20) * 10 : (rotate - r / 20) * 10,
+    const syncHalo = () => {
+      const container = containerRef.current;
+      const list = navRef.current;
+      if (!container || !list || activeIndex < 0) {
+        setHalo({ x: 0, ready: false });
+        return;
+      }
+      const activeLi = list.children[activeIndex] as HTMLElement | undefined;
+      if (!activeLi) {
+        setHalo({ x: 0, ready: false });
+        return;
+      }
+      const containerRect = container.getBoundingClientRect();
+      const activeRect = activeLi.getBoundingClientRect();
+      const center = activeRect.left - containerRect.left + activeRect.width / 2;
+      setHalo({ x: center, ready: true });
     };
-  };
 
-  const makeParticles = (element: HTMLElement) => {
-    if (reduceMotionRef.current) return;
-    const d: [number, number] = particleDistances;
-    const r = particleR;
-    const bubbleTime = animationTime * 2 + timeVariance;
-    element.style.setProperty("--time", `${bubbleTime}ms`);
-    for (let i = 0; i < particleCount; i++) {
-      const t = animationTime * 2 + noise(timeVariance * 2);
-      const p = createParticle(i, t, d, r);
-      element.classList.remove("active");
-      setTimeout(() => {
-        const particle = document.createElement("span");
-        const point = document.createElement("span");
-        particle.classList.add("particle");
-        particle.style.setProperty("--start-x", `${p.start[0]}px`);
-        particle.style.setProperty("--start-y", `${p.start[1]}px`);
-        particle.style.setProperty("--end-x", `${p.end[0]}px`);
-        particle.style.setProperty("--end-y", `${p.end[1]}px`);
-        particle.style.setProperty("--time", `${p.time}ms`);
-        particle.style.setProperty("--scale", `${p.scale}`);
-        particle.style.setProperty("--color", `var(--color-${p.color}, white)`);
-        particle.style.setProperty("--rotate", `${p.rotate}deg`);
-        point.classList.add("point");
-        particle.appendChild(point);
-        element.appendChild(particle);
-        requestAnimationFrame(() => {
-          element.classList.add("active");
-        });
-        setTimeout(() => {
-          try {
-            element.removeChild(particle);
-          } catch {
-            /* already gone */
-          }
-        }, t);
-      }, 30);
-    }
-  };
-
-  const updateEffectPosition = (element: HTMLElement) => {
-    if (!containerRef.current || !filterRef.current || !textRef.current) return;
-    const containerRect = containerRef.current.getBoundingClientRect();
-    const pos = element.getBoundingClientRect();
-    const styles = {
-      left: `${pos.x - containerRect.x}px`,
-      top: `${pos.y - containerRect.y}px`,
-      width: `${pos.width}px`,
-      height: `${pos.height}px`,
-    };
-    Object.assign(filterRef.current.style, styles);
-    Object.assign(textRef.current.style, styles);
-    textRef.current.innerText = element.innerText;
-  };
-
-  const handleClick = (event: MouseEvent<HTMLAnchorElement>, index: number) => {
-    const liEl = event.currentTarget.parentElement;
-    if (!liEl) return;
-    if (activeIndex === index) return;
-    setActiveIndex(index);
-    updateEffectPosition(liEl);
-    if (filterRef.current) {
-      const particles = filterRef.current.querySelectorAll(".particle");
-      particles.forEach((p) => filterRef.current!.removeChild(p));
-      makeParticles(filterRef.current);
-    }
-    if (textRef.current) {
-      textRef.current.classList.remove("active");
-      void textRef.current.offsetWidth;
-      textRef.current.classList.add("active");
-    }
-  };
-
-  useEffect(() => {
-    if (!navRef.current || !containerRef.current) return;
-    const activeLi = navRef.current.querySelectorAll("li")[activeIndex] as HTMLElement | undefined;
-    if (activeLi) {
-      updateEffectPosition(activeLi);
-      textRef.current?.classList.add("active");
-    }
-    const resizeObserver = new ResizeObserver(() => {
-      const currentActiveLi = navRef.current?.querySelectorAll("li")[activeIndex] as HTMLElement | undefined;
-      if (currentActiveLi) updateEffectPosition(currentActiveLi);
+    syncHalo();
+    let cancelled = false;
+    document.fonts?.ready.then(() => {
+      if (!cancelled) syncHalo();
     });
-    resizeObserver.observe(containerRef.current);
-    return () => resizeObserver.disconnect();
+
+    const list = navRef.current;
+    if (!list) {
+      return () => {
+        cancelled = true;
+      };
+    }
+
+    const resizeObserver = new ResizeObserver(syncHalo);
+    resizeObserver.observe(list);
+    const activeLi = activeIndex >= 0 ? (list.children[activeIndex] as HTMLElement | undefined) : undefined;
+    if (activeLi) resizeObserver.observe(activeLi);
+
+    return () => {
+      cancelled = true;
+      resizeObserver.disconnect();
+    };
   }, [activeIndex]);
 
   return (
-    <div className="gooey-nav relative w-full" ref={containerRef}>
-      <nav className="relative flex w-full" style={{ transform: "translate3d(0,0,0.01px)" }}>
-        <ul
-          ref={navRef}
-          className="relative z-[3] m-0 flex w-full list-none items-center justify-evenly p-0 pl-3 pr-1 text-lg"
-        >
-          {items.map((item, index) => (
-            <li
-              key={item.href}
-              className={`relative cursor-pointer rounded-full transition-colors duration-300 ${
-                activeIndex === index ? "active" : ""
-              }`}
-            >
+    <nav ref={containerRef} aria-label="Primary" className="relative w-full">
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute top-1/2 left-0 h-8 w-24 rounded-full bg-accent/20 blur-md transition-[transform,opacity] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none"
+        style={{
+          transform: `translate3d(${halo.x - 48}px, -50%, 0)`,
+          opacity: halo.ready ? 1 : 0,
+        }}
+      />
+      <ul
+        ref={navRef}
+        className="relative z-10 m-0 flex w-full list-none items-center justify-end gap-1 p-0"
+      >
+        {items.map((item, index) => {
+          const isActive = activeIndex === index;
+          return (
+            <li key={item.href}>
               <Link
                 href={item.href}
-                onClick={(e) => handleClick(e, index)}
-                aria-current={activeIndex === index ? "page" : undefined}
-                className="inline-block rounded-full px-[0.9em] py-[0.45em] outline-none focus-visible:ring-2 focus-visible:ring-accent/80"
+                aria-current={isActive ? "page" : undefined}
+                className={`inline-flex items-center rounded-full px-4 py-2 text-sm font-medium tracking-[-0.01em] transition-all duration-200 active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${
+                  isActive
+                    ? "glass-chip-active text-ice"
+                    : "border border-transparent text-muted hover:bg-white/[0.06] hover:text-ice"
+                }`}
               >
                 {item.label}
               </Link>
             </li>
-          ))}
-        </ul>
-      </nav>
-      <span className="effect filter" ref={filterRef} />
-      <span className="effect text" ref={textRef} />
-    </div>
+          );
+        })}
+      </ul>
+    </nav>
   );
 };
 

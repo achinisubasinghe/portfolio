@@ -1,11 +1,13 @@
 export const personal = {
-  name: "A.D Achini Maheshika Subasinghe",
-  role: "Software Engineer",
+  name: "A.D. Achini Maheshika Subasinghe",
+  shortName: "Achini Subasinghe",
+  role: "Software engineering undergraduate",
   intro:
-    "Hello Welcome. I am 21 years old undergraduate at NSBM Green University. I am passionate about building software that solves real-world problems. I enjoy turning ideas into practical applications through clean code, continuous learning, and creative thinking. I'm always looking for opportunities to grow as a developer and contribute to impactful projects.",
+    "I study software engineering at NSBM Green University in Sri Lanka and build full-stack web applications with Next.js, TypeScript, Node.js, Spring Boot, and relational databases. My work focuses on internal tools, role-based portals, and student platforms.",
   email: "achinimaheshika12@gmail.com",
   cvPath: "/images/Achini - CV.pdf",
-  phone: "+94 785866939",
+  phone: "+94 78 586 6939",
+  phoneHref: "+94785866939",
   location: "Homagama, Sri Lanka",
   linkedin: "https://linkedin.com/in/achinisubasinghe",
   github: "https://github.com/AchiniSubasinghe",
