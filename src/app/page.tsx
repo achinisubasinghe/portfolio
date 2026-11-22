@@ -22,8 +22,7 @@ export default function Home() {
 
         <div className="flex flex-wrap items-center gap-4 pt-2">
           <SpecularButton
-            href={personal.cvPath}
-            download="Achini-CV.pdf"
+            href={personal.cvUrl}
             size="md"
             radius={12}
             tint="#6ec6d9"
