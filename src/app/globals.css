@@ -134,11 +134,6 @@
     opacity: 0.035;
   }
 
-  .portrait-mask {
-    mask-image: linear-gradient(to bottom, #000000 76%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to bottom, #000000 76%, transparent 100%);
-  }
-
   .panel-enter {
     animation: panel-fade-up 240ms cubic-bezier(0.22, 1, 0.36, 1) both;
   }

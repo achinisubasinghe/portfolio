@@ -73,14 +73,18 @@ export default function Home() {
             aria-hidden="true"
             className="pointer-events-none absolute inset-x-4 top-8 bottom-4 -z-10 rounded-full bg-[radial-gradient(circle,rgba(110,198,217,0.2)_0%,rgba(8,11,16,0)_70%)] blur-2xl"
           />
-          <Image
-            src="/images/achini.jpeg"
-            alt={personal.shortName}
-            width={425}
-            height={588}
-            priority
-            className="portrait-mask h-auto w-full object-contain"
-          />
+          <div className="glass overflow-hidden rounded-2xl p-2">
+            <div className="overflow-hidden rounded-xl bg-[#0b1018]">
+              <Image
+                src="/images/achini.jpg"
+                alt={personal.shortName}
+                width={747}
+                height={1024}
+                priority
+                className="h-auto w-full object-cover object-top"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>

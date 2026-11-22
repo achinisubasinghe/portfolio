@@ -1,42 +1,38 @@
-export interface Project {
+export interface ProjectConfig {
+  owner: string;
+  repo: string;
   title: string;
   description: string;
-  image: string;
   imageAlt: string;
-  repoUrl: string;
-  liveDemoUrl: string;
   techStack: string[];
 }
 
-export const projects: Project[] = [
+export const projects: ProjectConfig[] = [
   {
+    owner: "achinisubasinghe",
+    repo: "canyon",
     title: "Canyon",
     description:
       "Project management web application with role-based access control for projects, tasks, and users. Includes an AI assistant at /agent that runs server-side actions limited to the signed-in user's permissions.",
-    image: "/images/canyon.png",
     imageAlt: "Canyon sign-in screen for project and task management",
-    repoUrl: "https://github.com/achinisubasinghe/canyon.git",
-    liveDemoUrl: "https://canyon.achini.space",
     techStack: ["Next.js", "Node.js", "Express", "MariaDB", "Bun"],
   },
   {
+    owner: "achinisubasinghe",
+    repo: "uni-life-reborn",
     title: "UniLife",
     description:
       "Full-stack directory that connects Sri Lankan university students with verified local businesses. Includes searchable listings, business onboarding, admin moderation, and an AI guide that answers campus questions.",
-    image: "/images/unilife.png",
     imageAlt: "UniLife landing page showing campus directory search and UniBot assistant",
-    repoUrl: "https://github.com/achinisubasinghe/uni-life-reborn.git",
-    liveDemoUrl: "https://unilife.achini.space",
     techStack: ["Next.js", "TypeScript", "Tailwind CSS", "Firebase"],
   },
   {
-    title: "Enerlytics",
+    owner: "achinisubasinghe",
+    repo: "project-approval-system",
+    title: "Project Approval System",
     description:
-      "Utility management and billing platform with separate portals for administrators, staff, meter readers, cashiers, managers, and customers. Supports customer onboarding, meter readings, billing, payments, usage analytics, and support tickets.",
-    image: "/images/enerlytics.png",
-    imageAlt: "Enerlytics utility management platform login screen",
-    repoUrl: "https://github.com/achinisubasinghe/enerlytics.git",
-    liveDemoUrl: "https://enerlytics.achini.space",
-    techStack: ["Next.js", "React", "MariaDB", "Chart.js"],
+      "Final-year project proposal and blind supervisor matching platform. Students submit proposals by research area, supervisors review anonymous matching proposals before identities are revealed, and module leaders manage allocations with a role-aware Groq assistant.",
+    imageAlt: "Project Approval System application screenshot",
+    techStack: [".NET 10", "Blazor Server", "MudBlazor", "SQL Server", "EF Core", "Groq"],
   },
 ];

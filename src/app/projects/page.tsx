@@ -1,11 +1,17 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { projects, type Project } from "@/data/projects";
+import { projects, type ProjectConfig } from "@/data/projects";
+import { fetchGitHubProject, type GitHubProjectData } from "@/lib/github";
 import { Section } from "@/components/Section";
+
+export const revalidate = 3600;
+
+type Project = ProjectConfig & GitHubProjectData;
 
 export const metadata: Metadata = {
   title: "Projects",
-  description: "Web applications built by Achini Subasinghe, including Canyon, UniLife, and Enerlytics.",
+  description:
+    "Web applications built by Achini Subasinghe, including Canyon, UniLife, and Project Approval System.",
 };
 
 function ExternalArrow() {
@@ -41,16 +47,16 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
               <span className="size-2 rounded-full bg-white/20" aria-hidden="true" />
               <span className="size-2 rounded-full bg-white/20" aria-hidden="true" />
               <span className="ml-2 truncate font-mono text-[11px] text-muted">
-                {project.liveDemoUrl.replace("https://", "")}
+                {project.liveDemoUrl ? project.liveDemoUrl.replace(/^https?:\/\//, "") : project.repo}
               </span>
             </div>
-            <div className="aspect-video w-full overflow-hidden">
+            <div className="relative aspect-video w-full overflow-hidden">
               <Image
-                src={project.image}
+                src={project.imageUrl}
                 alt={project.imageAlt}
-                width={1366}
-                height={768}
-                className="h-full w-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.02]"
+                fill
+                sizes="(max-width: 1024px) 100vw, 560px"
+                className="object-cover transition-transform duration-300 ease-out group-hover:scale-[1.02]"
               />
             </div>
           </div>
@@ -79,15 +85,17 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           </ul>
 
           <div className="mt-auto flex flex-wrap items-center gap-3 pt-7">
-            <a
-              href={project.liveDemoUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-xl border border-accent/45 bg-accent/15 px-4 py-2.5 text-sm font-medium text-ice transition-all duration-200 hover:border-accent/70 hover:bg-accent/25 active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-            >
-              <span>Live demo</span>
-              <ExternalArrow />
-            </a>
+            {project.liveDemoUrl && (
+              <a
+                href={project.liveDemoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-xl border border-accent/45 bg-accent/15 px-4 py-2.5 text-sm font-medium text-ice transition-all duration-200 hover:border-accent/70 hover:bg-accent/25 active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+              >
+                <span>Live demo</span>
+                <ExternalArrow />
+              </a>
+            )}
             <a
               href={project.repoUrl}
               target="_blank"
@@ -104,7 +112,14 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
   );
 }
 
-export default function ProjectsPage() {
+export default async function ProjectsPage() {
+  const hydratedProjects: Project[] = await Promise.all(
+    projects.map(async (project) => {
+      const github = await fetchGitHubProject(project.owner, project.repo);
+      return { ...project, ...github };
+    })
+  );
+
   return (
     <div className="space-y-10">
       <header className="space-y-3">
@@ -119,8 +134,8 @@ export default function ProjectsPage() {
       </header>
 
       <div className="flex flex-col gap-8">
-        {projects.map((project, index) => (
-          <ProjectCard key={project.repoUrl} project={project} index={index} />
+        {hydratedProjects.map((project, index) => (
+          <ProjectCard key={project.repo} project={project} index={index} />
         ))}
       </div>
     </div>
