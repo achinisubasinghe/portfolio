@@ -3,7 +3,7 @@ export const personal = {
   shortName: "Achini Subasinghe",
   role: "Software engineering undergraduate",
   intro:
-    "I study software engineering at NSBM Green University in Sri Lanka and build full-stack web applications with Next.js, TypeScript, Node.js, Spring Boot, and relational databases. My work focuses on internal tools, role-based portals, and student platforms.",
+    "I study software engineering at NSBM Green University and build full-stack web apps in Next.js, ASP.NET Core, and Spring Boot. Recent work covers team task tracking, university service listings, and blind supervisor matching.",
   email: "achinimaheshika12@gmail.com",
   cvPath: "/images/Achini - CV.pdf",
   phone: "+94 78 586 6939",

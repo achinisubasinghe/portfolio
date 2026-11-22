@@ -7,11 +7,6 @@ export default function Home() {
   return (
     <div className="grid min-h-[calc(100dvh-13rem)] grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-14">
       <div className="order-2 flex flex-col items-start gap-6 lg:order-1 lg:col-span-7">
-        <div className="inline-flex items-center gap-2.5 rounded-full border border-white/12 bg-white/[0.04] px-3.5 py-1.5 font-mono text-xs tracking-[0.04em] text-muted">
-          <span className="size-1.5 rounded-full bg-accent" aria-hidden="true" />
-          <span>{personal.location}</span>
-        </div>
-
         <div className="space-y-3">
           <h1 className="text-4xl font-semibold leading-[1.08] tracking-[-0.03em] text-balance text-ice sm:text-5xl lg:text-[3.5rem]">
             {personal.name}

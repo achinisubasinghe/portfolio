@@ -128,8 +128,8 @@ export default async function ProjectsPage() {
           Projects
         </h1>
         <p className="max-w-[60ch] text-[15px] leading-[1.7] text-pretty text-muted sm:text-base">
-          Full-stack web applications built with Next.js, TypeScript, relational databases, and
-          role-based access control.
+          Three deployed applications covering task management, university listings, and anonymous
+          project matching.
         </p>
       </header>
 
